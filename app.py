@@ -56,6 +56,7 @@ channel.queue_declare(queue='etolldata') # Declare a queue
 def on_message(client, userdata, msg):
     plate = msg.payload.decode()
     print(plate)
+    client.publish("callback", payload=plate, qos=1)
     channel.basic_publish(exchange='',
                       routing_key='etolldata',
                       body=plate)
